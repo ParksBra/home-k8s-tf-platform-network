@@ -28,3 +28,48 @@ output "ingress_nginx_https_port" {
   description = "The HTTPS port used by the Ingress NGINX controller."
   value       = module.ingress_nginx.https_port
 }
+
+output "cert_manager_namespace_name" {
+  description = "The namespace where Cert-Manager is deployed."
+  value       = data.kubernetes_namespace.cert_manager_namespace.metadata[0].name
+}
+
+output "cert_manager_namespace_id" {
+  description = "The ID of the namespace where Cert-Manager is deployed."
+  value       = data.kubernetes_namespace.cert_manager_namespace.id
+}
+
+output "tailscale_operator_namespace_name" {
+  description = "The namespace where the Tailscale operator is deployed."
+  value       = data.kubernetes_namespace.tailscale_operator_namespace.metadata[0].name
+}
+
+output "tailscale_operator_namespace_id" {
+  description = "The ID of the namespace where the Tailscale operator is deployed."
+  value       = data.kubernetes_namespace.tailscale_operator_namespace.id
+}
+
+output "ingress_nginx_namespace_name" {
+  description = "The namespace where Ingress NGINX is deployed."
+  value       = data.kubernetes_namespace.ingress_nginx_namespace.metadata[0].name
+}
+
+output "ingress_nginx_namespace_id" {
+  description = "The ID of the namespace where Ingress NGINX is deployed."
+  value       = data.kubernetes_namespace.ingress_nginx_namespace.id
+}
+
+output "tigera_operator_namespace_name" {
+  description = "The namespace where the Tigera Operator is deployed."
+  value       = data.kubernetes_namespace.tigera_operator_namespace.metadata[0].name
+}
+
+output "tigera_operator_namespace_id" {
+  description = "The ID of the namespace where the Tigera Operator is deployed."
+  value       = data.kubernetes_namespace.tigera_operator_namespace.id
+}
+
+output "cert_manager_cluster_issuer_name" {
+  description = "The name of the ClusterIssuer created by Cert-Manager."
+  value       = module.cert_manager.cluster_issuer_name
+}
