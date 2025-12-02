@@ -5,7 +5,7 @@ module "ingress_nginx" {
     module.tailscale,
     data.kubernetes_namespace.ingress_nginx,
   ]
-  source = "github.com/ParksBra/home-k8s-tf-lib//modules/ingress_nginx?ref=1.0.0"
+  source = "github.com/ParksBra/home-k8s-tf-lib//modules/ingress_nginx?ref=create_nginx_external_ip"
 
   namespace                   = data.kubernetes_namespace.ingress_nginx[0].metadata[0].name
   create_namespace            = false
