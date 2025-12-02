@@ -7,9 +7,12 @@ module "cert_manager" {
 
   namespace_name        = data.kubernetes_namespace.cert_manager.metadata[0].name
   create_namespace      = false
+
+  cluster_issuer_server = var.cert_manager_acme_server
   cluster_issuer_email  = var.cert_manager_acme_email
   cluster_issuer_create = var.cert_manager_create_cluster_issuer
   cluster_issuer_name   = var.cert_manager_cluster_issuer_name
+
   solvers               = [
     {
       dns01 = {
