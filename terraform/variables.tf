@@ -91,6 +91,12 @@ variable "cert_manager_cluster_issuer_name" {
   default     = "letsencrypt"
 }
 
+variable "cert_manager_acme_server" {
+  description = "The ACME server URL for Cert-Manager."
+  type        = string
+  default     = "https://acme-v02.api.letsencrypt.org/directory"
+}
+
 variable "cert_manager_acme_email" {
   description = "The email address to use for ACME registration."
   type        = string
