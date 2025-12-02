@@ -3,7 +3,7 @@ resource "kubernetes_secret" "cert_manager_dns_solver_api_token" {
     data.kubernetes_namespace.cert_manager
   ]
   metadata {
-    name      = "dns-solver-api-token-secret"
+    name      = local.cert_manager_dns_solver_secret_name
     namespace = data.kubernetes_namespace.cert_manager.metadata[0].name
   }
   data = {
