@@ -1,65 +1,65 @@
 
 output "cni_pod_network_cidr" {
   description = "The Pod Network CIDR used by the CNI (Tigera Operator / Calico) for use by other modules."
-  value       = module.cni.pod_network_cidr
+  value       = var.tigera_operator_enabled ? module.cni[0].pod_network_cidr : var.pod_network_cidr
 }
 
 output "tailscale_ingress_class_name" {
   description = "The Ingress class name provided by the TailScale operator for use by other modules."
-  value       = module.tailscale.ingress_class_name
+  value       = var.tailscale_enabled ? module.tailscale[0].ingress_class_name : ""
 }
 
 output "tailscale_operator_default_tags" {
   description = "The default tags applied to TailScale operator entries for use by other modules."
-  value       = module.tailscale.operator_default_tags
+  value       = var.tailscale_enabled ? module.tailscale[0].operator_default_tags : []
 }
 
 output "tailscale_proxy_default_tags" {
   description = "The default tags applied to TailScale proxy entries for use by other modules."
-  value       = module.tailscale.proxy_default_tags
+  value       = var.tailscale_enabled ? module.tailscale[0].proxy_default_tags : []
 }
 
 output "ingress_nginx_http_port" {
   description = "The HTTP port used by the Ingress NGINX controller."
-  value       = module.ingress_nginx.http_port
+  value       = var.ingress_nginx_enabled ? module.ingress_nginx[0].http_port : null
 }
 
 output "ingress_nginx_https_port" {
   description = "The HTTPS port used by the Ingress NGINX controller."
-  value       = module.ingress_nginx.https_port
+  value       = var.ingress_nginx_enabled ? module.ingress_nginx[0].https_port : null
 }
 
-output "cert_manager_namespace_name" {
+output "cert_manager_namespace" {
   description = "The namespace where Cert-Manager is deployed."
-  value       = data.kubernetes_namespace.cert_manager.metadata[0].name
+  value       = var.cert_manager_enabled ? data.kubernetes_namespace.cert_manager[0].metadata[0].name : ""
 }
 
-output "tailscale_operator_namespace_name" {
+output "tailscale_operator_namespace" {
   description = "The namespace where the Tailscale operator is deployed."
-  value       = data.kubernetes_namespace.tailscale_operator.metadata[0].name
+  value       = var.tailscale_enabled ? data.kubernetes_namespace.tailscale_operator[0].metadata[0].name : ""
 }
 
-output "ingress_nginx_namespace_name" {
+output "ingress_nginx_namespace" {
   description = "The namespace where Ingress NGINX is deployed."
-  value       = data.kubernetes_namespace.ingress_nginx.metadata[0].name
+  value       = var.ingress_nginx_enabled ? data.kubernetes_namespace.ingress_nginx[0].metadata[0].name : ""
 }
 
-output "tigera_operator_namespace_name" {
+output "tigera_operator_namespace" {
   description = "The namespace where the Tigera Operator is deployed."
-  value       = data.kubernetes_namespace.tigera_operator.metadata[0].name
+  value       = var.tigera_operator_enabled ? data.kubernetes_namespace.tigera_operator[0].metadata[0].name : ""
 }
 
 output "cert_manager_cluster_issuer_name" {
   description = "The name of the ClusterIssuer created by Cert-Manager."
-  value       = module.cert_manager.cluster_issuer_name
+  value       = var.cert_manager_enabled ? module.cert_manager[0].cluster_issuer_name : ""
 }
 
 output "cert_manager_cluster_issuer_created" {
   description = "Whether the ClusterIssuer was created by Cert-Manager."
-  value       = var.cert_manager_create_cluster_issuer
+  value       = var.cert_manager_enabled ? var.cert_manager_create_cluster_issuer : false
 }
 
 output "cert_manager_acme_server" {
   description = "The ACME server URL used by Cert-Manager."
-  value       = module.cert_manager.cluster_issuer_server
+  value       = var.cert_manager_enabled ? module.cert_manager[0].cluster_issuer_server : ""
 }

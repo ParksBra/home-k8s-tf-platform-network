@@ -27,6 +27,12 @@ variable "tailscale_operator_create_namespace" {
   default     = true
 }
 
+variable "tigera_operator_enabled" {
+  description = "Whether to enable the Tigera Operator (Calico CNI) module. Only disable if another CNI is being used."
+  type        = bool
+  default     = true
+}
+
 variable "tigera_operator_namespace" {
   description = "The namespace to deploy the Tigera Operator into."
   type        = string
@@ -39,6 +45,12 @@ variable "tigera_operator_create_namespace" {
   default     = true
 }
 
+variable "ingress_nginx_enabled" {
+  description = "Whether to enable the Ingress NGINX module."
+  type        = bool
+  default     = true
+}
+
 variable "ingress_nginx_namespace" {
   description = "The namespace to deploy Ingress NGINX into."
   type        = string
@@ -47,6 +59,12 @@ variable "ingress_nginx_namespace" {
 
 variable "ingress_nginx_create_namespace" {
   description = "Whether to create the Ingress NGINX namespace."
+  type        = bool
+  default     = true
+}
+
+variable "tailscale_enabled" {
+  description = "Whether to enable the Tailscale operator module."
   type        = bool
   default     = true
 }
@@ -77,6 +95,12 @@ variable "tailscale_proxy_default_tags" {
   default     = [
     "tag:k8s"
   ]
+}
+
+variable "cert_manager_enabled" {
+  description = "Whether to enable the Cert-Manager module."
+  type        = bool
+  default     = true
 }
 
 variable "cert_manager_create_cluster_issuer" {

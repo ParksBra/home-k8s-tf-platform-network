@@ -1,11 +1,13 @@
 module "cert_manager" {
+  count = var.cert_manager_enabled ? 1 : 0
   source = "terraform-iaac/cert-manager/kubernetes"
+  version = "3.1.1"
   depends_on = [
     data.kubernetes_namespace.cert_manager,
     kubernetes_secret.cert_manager_dns_solver_api_token
   ]
 
-  namespace_name        = data.kubernetes_namespace.cert_manager.metadata[0].name
+  namespace_name        = data.kubernetes_namespace.cert_manager[0].metadata[0].name
   create_namespace      = false
 
   cluster_issuer_server = var.cert_manager_acme_server
@@ -19,7 +21,7 @@ module "cert_manager" {
         "${var.cert_manager_dns_solver_provider}" = {
           email = var.cert_manager_dns_solver_email
           apiTokenSecretRef = {
-            name = kubernetes_secret.cert_manager_dns_solver_api_token.metadata[0].name
+            name = kubernetes_secret.cert_manager_dns_solver_api_token[0].metadata[0].name
             key  = local.cert_manager_dns_solver_secret_key
           }
         }
