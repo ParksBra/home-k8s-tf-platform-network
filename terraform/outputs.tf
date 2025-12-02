@@ -1,4 +1,3 @@
-
 output "cni_pod_network_cidr" {
   description = "The Pod Network CIDR used by the CNI (Tigera Operator / Calico) for use by other modules."
   value       = var.tigera_operator_enabled ? module.cni[0].pod_network_cidr : var.pod_network_cidr
@@ -62,4 +61,14 @@ output "cert_manager_cluster_issuer_created" {
 output "cert_manager_acme_server" {
   description = "The ACME server URL used by Cert-Manager."
   value       = var.cert_manager_enabled ? module.cert_manager[0].cluster_issuer_server : ""
+}
+
+output "ingress_nginx_service_type" {
+  description = "The Service type used by the Ingress NGINX controller."
+  value       = var.ingress_nginx_enabled ? module.ingress_nginx[0].service_type : ""
+}
+
+output "ingress_nginx_service_loadbalancer_ip" {
+  description = "The LoadBalancer IP assigned to the Ingress NGINX controller (if applicable)."
+  value       = var.ingress_nginx_enabled ? module.ingress_nginx[0].service_loadbalancer_ip : null
 }

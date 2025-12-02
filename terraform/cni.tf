@@ -3,10 +3,17 @@ module "cni" {
   depends_on = [
     data.kubernetes_namespace.tigera_operator,
   ]
-  source = "github.com/ParksBra/home-k8s-tf-lib//modules/tigera_operator?ref=1.0.0"
+  source = "github.com/ParksBra/home-k8s-tf-lib//modules/tigera_operator?ref=1.1.0"
 
-  namespace           = data.kubernetes_namespace.tigera_operator[0].metadata[0].name
-  create_namespace    = false
+  chart_cleanup_on_fail   = var.chart_cleanup_on_fail
+  chart_dependency_update = var.chart_dependency_update
+  chart_linting_enabled   = var.chart_linting_enabled
+  chart_recreate_pods     = var.chart_recreate_pods
+  chart_replace           = var.chart_replace
+  chart_upgrade_install   = var.chart_upgrade_install
 
-  pod_network_cidr = var.pod_network_cidr
+  namespace               = data.kubernetes_namespace.tigera_operator[0].metadata[0].name
+  create_namespace        = false
+
+  pod_network_cidr        = var.pod_network_cidr
 }
