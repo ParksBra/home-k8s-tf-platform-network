@@ -1,4 +1,3 @@
-
 output "cni_pod_network_cidr" {
   description = "The Pod Network CIDR used by the CNI (Tigera Operator / Calico) for use by other modules."
   value       = var.tigera_operator_enabled ? module.cni[0].pod_network_cidr : var.pod_network_cidr
