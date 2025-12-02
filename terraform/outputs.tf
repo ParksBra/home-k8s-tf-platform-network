@@ -31,42 +31,42 @@ output "ingress_nginx_https_port" {
 
 output "cert_manager_namespace_name" {
   description = "The namespace where Cert-Manager is deployed."
-  value       = data.kubernetes_namespace.cert_manager_namespace.metadata[0].name
+  value       = data.kubernetes_namespace.cert_manager.metadata[0].name
 }
 
 output "cert_manager_namespace_id" {
   description = "The ID of the namespace where Cert-Manager is deployed."
-  value       = data.kubernetes_namespace.cert_manager_namespace.id
+  value       = data.kubernetes_namespace.cert_manager.id
 }
 
 output "tailscale_operator_namespace_name" {
   description = "The namespace where the Tailscale operator is deployed."
-  value       = data.kubernetes_namespace.tailscale_operator_namespace.metadata[0].name
+  value       = data.kubernetes_namespace.tailscale_operator.metadata[0].name
 }
 
 output "tailscale_operator_namespace_id" {
   description = "The ID of the namespace where the Tailscale operator is deployed."
-  value       = data.kubernetes_namespace.tailscale_operator_namespace.id
+  value       = data.kubernetes_namespace.tailscale_operator.id
 }
 
 output "ingress_nginx_namespace_name" {
   description = "The namespace where Ingress NGINX is deployed."
-  value       = data.kubernetes_namespace.ingress_nginx_namespace.metadata[0].name
+  value       = data.kubernetes_namespace.ingress_nginx.metadata[0].name
 }
 
 output "ingress_nginx_namespace_id" {
   description = "The ID of the namespace where Ingress NGINX is deployed."
-  value       = data.kubernetes_namespace.ingress_nginx_namespace.id
+  value       = data.kubernetes_namespace.ingress_nginx.id
 }
 
 output "tigera_operator_namespace_name" {
   description = "The namespace where the Tigera Operator is deployed."
-  value       = data.kubernetes_namespace.tigera_operator_namespace.metadata[0].name
+  value       = data.kubernetes_namespace.tigera_operator.metadata[0].name
 }
 
 output "tigera_operator_namespace_id" {
   description = "The ID of the namespace where the Tigera Operator is deployed."
-  value       = data.kubernetes_namespace.tigera_operator_namespace.id
+  value       = data.kubernetes_namespace.tigera_operator.id
 }
 
 output "cert_manager_cluster_issuer_name" {

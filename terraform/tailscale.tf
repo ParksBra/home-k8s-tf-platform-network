@@ -1,11 +1,11 @@
 module "tailscale" {
   depends_on = [
     module.cni,
-    data.kubernetes_namespace.tailscale_operator_namespace,
+    data.kubernetes_namespace.tailscale_operator,
   ]
   source = "github.com/ParksBra/home-k8s-tf-lib//modules/tailscale?ref=create_platform_tf"
 
-  namespace           = data.kubernetes_namespace.tailscale_operator_namespace.metadata[0].name
+  namespace           = data.kubernetes_namespace.tailscale_operator.metadata[0].name
   create_namespace    = false
 
   oauth_client_id     = var.tailscale_oauth_client_id
