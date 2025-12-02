@@ -3,7 +3,7 @@ module "cni" {
   depends_on = [
     data.kubernetes_namespace.tigera_operator,
   ]
-  source = "github.com/ParksBra/home-k8s-tf-lib//modules/tigera_operator?ref=create_platform_tf"
+  source = "github.com/ParksBra/home-k8s-tf-lib//modules/tigera_operator?ref=1.0.0"
 
   namespace           = data.kubernetes_namespace.tigera_operator[0].metadata[0].name
   create_namespace    = false

@@ -1,6 +1,7 @@
 module "cert_manager" {
   count = var.cert_manager_enabled ? 1 : 0
   source = "terraform-iaac/cert-manager/kubernetes"
+  version = "3.1.1"
   depends_on = [
     data.kubernetes_namespace.cert_manager,
     kubernetes_secret.cert_manager_dns_solver_api_token

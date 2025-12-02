@@ -4,7 +4,7 @@ module "tailscale" {
     module.cni,
     data.kubernetes_namespace.tailscale_operator,
   ]
-  source = "github.com/ParksBra/home-k8s-tf-lib//modules/tailscale?ref=create_platform_tf"
+  source = "github.com/ParksBra/home-k8s-tf-lib//modules/tailscale?ref=1.0.0"
 
   namespace           = data.kubernetes_namespace.tailscale_operator[0].metadata[0].name
   create_namespace    = false
