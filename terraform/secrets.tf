@@ -1,4 +1,5 @@
 resource "kubernetes_secret" "cert_manager_dns_solver_api_token" {
+  count = var.cert_manager_enabled ? 1 : 0
   depends_on = [
     data.kubernetes_namespace.cert_manager
   ]
