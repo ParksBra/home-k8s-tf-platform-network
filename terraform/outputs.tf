@@ -73,3 +73,8 @@ output "cert_manager_cluster_issuer_name" {
   description = "The name of the ClusterIssuer created by Cert-Manager."
   value       = module.cert_manager.cluster_issuer_name
 }
+
+output "cert_manager_cluster_issuer_created" {
+  description = "Whether the ClusterIssuer was created by Cert-Manager."
+  value       = module.cert_manager.cluster_issuer_created
+}
