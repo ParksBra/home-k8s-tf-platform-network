@@ -1,29 +1,31 @@
-provider "infisical" {
-  host = var.infisical_url
-  auth = {
-    universal = {
-      client_id     = var.infisical_auth_client_id
-      client_secret = var.infisical_auth_client_secret
-    }
-  }
-}
+module "network" {
+  source = "../modules/_network"
 
-provider "kubernetes" {
-  config_path = var.kubeconfig_path
-}
+  cert_manager_namespace = local.cert_manager_namespace
+  cert_manager_create_namespace = true
 
-provider "kubectl" {
-  config_path = var.kubeconfig_path
-}
+  tailscale_operator_namespace = local.tailscale_operator_namespace
+  tailscale_operator_create_namespace = true
 
-provider "helm" {
-  kubernetes = {
-    config_path = var.kubeconfig_path
-  }
-}
+  tigera_operator_namespace = local.tigera_operator_namespace
+  tigera_operator_create_namespace = true
 
-provider "jinja" {}
+  ingress_nginx_namespace = local.ingress_nginx_namespace
+  ingress_nginx_create_namespace = true
 
-provider "cloudflare" {
-  api_token = data.infisical_secrets.environment.secrets[local.cloudflare_provider_api_token_infisical_secret_name].value
+  pod_network_cidr = local.pod_network_cidr
+
+  tailscale_oauth_client_id = data.infisical_secrets.environment.secrets[local.tailscale_oauth_client_id_infisical_secret_name].value
+  tailscale_oauth_client_secret = data.infisical_secrets.environment.secrets[local.tailscale_oauth_client_secret_infisical_secret_name].value
+
+  tailscale_operator_default_tags = local.tailscale_operator_default_tags
+  tailscale_proxy_default_tags = local.tailscale_proxy_default_tags
+
+  cert_manager_acme_email = data.infisical_secrets.environment.secrets[local.cert_manager_acme_email_infisical_secret_name].value
+  cert_manager_dns_solver_email = data.infisical_secrets.environment.secrets[local.cert_manager_dns_provider_email_infisical_secret_name].value
+  cert_manager_dns_solver_api_token = data.infisical_secrets.environment.secrets[local.cert_manager_dns_provider_api_token_infisical_secret_name].value
+  cert_manager_dns_solver_provider = local.cert_manager_dns_provider
+
+  cert_manager_create_cluster_issuer = local.cert_manager_create_cluster_issuer
+  cert_manager_cluster_issuer_name = local.cert_manager_cluster_issuer_name
 }
