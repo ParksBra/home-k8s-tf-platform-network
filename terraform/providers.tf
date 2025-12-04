@@ -1,8 +1,8 @@
-provider "azurerm" {
-  features {
-    key_vault {}
-  }
-}
+# provider "azurerm" {
+#   features {
+#     key_vault {}
+#   }
+# }
 
 provider "kubernetes" {
   config_path = var.kubeconfig_path
