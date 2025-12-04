@@ -22,3 +22,10 @@ variable "service_network_cidr" {
   description = "The CIDR for the service network"
   type        = string
 }
+
+variable "cluster_domain" {
+  description = "The cluster domain (e.g., cluster.local)"
+  type        = string
+}
+
+

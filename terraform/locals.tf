@@ -1,6 +1,6 @@
 locals {
   # DNS configuration
-  external_parent_domain = "parkl.ee"
+  external_domain = "parkl.ee"
   create_dns_records = true
   dns_ttl_seconds = 1 # 1 is Automatic TTL
   dns_records_proxy_enabled = false
@@ -10,9 +10,9 @@ locals {
 
 locals {
   # Network configuration
-  pod_network_cidr = "10.244.0.0/16"
-  pod_service_cidr = "10.96.0.0/12"
-  cluster_domain = "cluster.local"
+  pod_network_cidr = var.pod_network_cidr
+  service_network_cidr = var.service_network_cidr
+  cluster_domain = var.cluster_domain
 
   cert_manager_namespace = "cert-manager"
 
@@ -38,4 +38,9 @@ locals {
   cert_manager_dns_provider = "cloudflare"
   cert_manager_dns_provider_email_secret_name = "k8s-certmanager-cloudflare-email"
   cert_manager_dns_provider_api_token_secret_name = "k8s-certmanager-cloudflare-api-token"
+}
+
+locals {
+  platform_context_namespace = "platform-network"
+  platform_context_configmap_name = "context"
 }
