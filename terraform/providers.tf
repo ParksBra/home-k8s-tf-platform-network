@@ -1,8 +1,4 @@
-# provider "azurerm" {
-#   features {
-#     key_vault {}
-#   }
-# }
+provider "azuredevops" {} # Configured via AZDO_PERSONAL_ACCESS_TOKEN, AZDO_ORG_SERVICE_URL env vars
 
 provider "kubernetes" {} # Configured via KUBE_CONFIG_PATH env var
 
