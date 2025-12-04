@@ -5,7 +5,6 @@ locals {
   dns_ttl_seconds = 1 # 1 is Automatic TTL
   dns_records_proxy_enabled = false
   dns_records_default_comment = "Managed by Terraform"
-  cloudflare_provider_api_token_secret_name = "terraform-provider-cloudflare-api-token"
 }
 
 locals {

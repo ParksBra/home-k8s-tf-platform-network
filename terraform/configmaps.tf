@@ -22,6 +22,5 @@ resource "kubernetes_config_map" "context" {
     dns_ttl_seconds                           = tostring(local.dns_ttl_seconds)
     dns_records_default_comment               = local.dns_records_default_comment
     dns_records_proxy_enabled                 = tostring(local.dns_records_proxy_enabled)
-    cloudflare_provider_api_token_secret_name = local.cloudflare_provider_api_token_secret_name
   }
 }
