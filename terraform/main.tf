@@ -1,5 +1,8 @@
 module "network" {
   source = "./modules/_network"
+  depends_on = [
+    data.azuredevops_variable_group.library
+  ]
 
   cert_manager_namespace = local.cert_manager_namespace
   cert_manager_create_namespace = true
