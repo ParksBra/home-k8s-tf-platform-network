@@ -101,6 +101,12 @@ variable "ingress_nginx_create_namespace" {
   default     = true
 }
 
+variable "ingress_nginx_ingress_class_name" {
+  description = "The Ingress class name to use for the Ingress NGINX controller."
+  type        = string
+  default     = "nginx"
+}
+
 variable "tailscale_enabled" {
   description = "Whether to enable the Tailscale operator module."
   type        = bool

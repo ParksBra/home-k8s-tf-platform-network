@@ -9,7 +9,7 @@ resource "kubernetes_config_map" "context" {
   }
 
   data = {
-    cert_manager_cluster_issuer_enabled       = tostring(module.network.cert_manager_cluster_issuer_enabled)
+    cert_manager_cluster_issuer_created       = tostring(module.network.cert_manager_cluster_issuer_created)
     cert_manager_cluster_issuer_name          = module.network.cert_manager_cluster_issuer_name
     primary_ingress_class_name                = module.network.primary_ingress_class_name
     external_ingress_ip                       = module.network.ingress_nginx_service_loadbalancer_ip

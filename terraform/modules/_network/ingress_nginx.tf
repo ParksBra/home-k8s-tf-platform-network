@@ -19,4 +19,3 @@ module "ingress_nginx" {
 
   service_type                = local.nginx_service_type
   service_load_balancer_class = local.nginx_loadbalancer_class_name
-}
