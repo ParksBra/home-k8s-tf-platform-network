@@ -21,10 +21,17 @@ locals {
 }
 
 locals {
+  variable_library = {
+    for v in data.azuredevops_variable_group.library.variable :
+    v.name => v.is_secret ? sensitive(v.secret_value) : v.value
+  }
+}
+
+locals {
   # Network configuration
-  pod_network_cidr = data.azuredevops_variable_group.library.variables[local.pod_network_cidr_var_ref]
-  service_network_cidr = data.azuredevops_variable_group.library.variables[local.service_network_cidr_var_ref]
-  cluster_domain = data.azuredevops_variable_group.library.variables[local.cluster_domain_var_ref]
+  pod_network_cidr = local.variable_library[local.pod_network_cidr_var_ref]
+  service_network_cidr = local.variable_library[local.service_network_cidr_var_ref]
+  cluster_domain = local.variable_library[local.cluster_domain_var_ref]
 
   cert_manager_namespace = "cert-manager"
 
@@ -34,8 +41,8 @@ locals {
 
   ingress_nginx_namespace = "ingress-nginx"
 
-  tailscale_oauth_client_id = data.azuredevops_variable_group.library.variables[local.tailscale_oauth_client_id_var_ref]
-  tailscale_oauth_client_secret = data.azuredevops_variable_group.library.variables[local.tailscale_oauth_client_secret_var_ref]
+  tailscale_oauth_client_id = local.variable_library[local.tailscale_oauth_client_id_var_ref]
+  tailscale_oauth_client_secret = local.variable_library[local.tailscale_oauth_client_secret_var_ref]
   tailscale_operator_default_tags = [
     "tag:k8s-operator"
   ]
@@ -45,10 +52,10 @@ locals {
 
   cert_manager_create_cluster_issuer = true
   cert_manager_cluster_issuer_name = "letsencrypt"
-  cert_manager_acme_email = data.azuredevops_variable_group.library.variables[local.cert_manager_acme_email_var_ref]
+  cert_manager_acme_email = local.variable_library[local.cert_manager_acme_email_var_ref]
   cert_manager_dns_provider = "cloudflare"
-  cert_manager_dns_provider_email = data.azuredevops_variable_group.library.variables[local.cert_manager_dns_provider_email_var_ref]
-  cert_manager_dns_provider_api_token = data.azuredevops_variable_group.library.variables[local.cert_manager_dns_provider_api_token_var_ref]
+  cert_manager_dns_provider_email = local.variable_library[local.cert_manager_dns_provider_email_var_ref]
+  cert_manager_dns_provider_api_token = local.variable_library[local.cert_manager_dns_provider_api_token_var_ref]
 }
 
 locals {
