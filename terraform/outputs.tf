@@ -78,7 +78,7 @@ output "dns_records_proxy_enabled" {
   value       = local.dns_records_proxy_enabled
 }
 
-output "dns_provider_api_token_infisical_secret_name" {
-  description = "The Infisical secret name for the DNS provider API token."
-  value       = local.cloudflare_provider_api_token_infisical_secret_name
+output "dns_provider_api_token_secret_name" {
+  description = "The secret name for the DNS provider API token."
+  value       = local.cloudflare_provider_api_token_secret_name
 }
