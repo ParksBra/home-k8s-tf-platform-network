@@ -1,8 +1,3 @@
-variable "kubeconfig_path" {
-  description = "Path to the kubeconfig file"
-  type        = string
-}
-
 variable "pod_network_cidr" {
   description = "The CIDR for the pod network"
   type        = string
@@ -16,12 +11,6 @@ variable "service_network_cidr" {
 variable "cluster_domain" {
   description = "The cluster domain (e.g., cluster.local)"
   type        = string
-}
-
-variable "cloudflare_provider_api_token" {
-  description = "API token for Cloudflare provider"
-  type        = string
-  sensitive   = true
 }
 
 variable "cert_manager_acme_email" {

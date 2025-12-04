@@ -4,22 +4,12 @@
 #   }
 # }
 
-provider "kubernetes" {
-  config_path = var.kubeconfig_path
-}
+provider "kubernetes" {} # Configured via KUBE_CONFIG_PATH env var
 
-provider "kubectl" {
-  config_path = var.kubeconfig_path
-}
+provider "kubectl" {} # Configured via KUBE_CONFIG_PATH env var
 
-provider "helm" {
-  kubernetes = {
-    config_path = var.kubeconfig_path
-  }
-}
+provider "helm" {} # Configured via KUBE_CONFIG_PATH env var
 
 provider "jinja" {}
 
-provider "cloudflare" {
-  api_token = data.azurerm_key_vault_secret.cloudflare_provider_api_token.value
-}
+provider "cloudflare" {} # Authenticated via CLOUDFLARE_API_TOKEN env var
