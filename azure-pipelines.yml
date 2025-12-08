@@ -42,7 +42,7 @@ stages:
           ansibleSshConfigurations:
             - group: k8s_controller
               user: controller
-              keySecretFileName: home-k8s-ssh-controller-private-key
+              keySecretFileName: "$(home-k8s-ssh-controller-key-secret-file)"
               keyPassphrase: ""
           ansiblePlaybooks:
             - site.yml
