@@ -1,0 +1,11 @@
+debug: "{{ lookup('env', 'DEBUG') | default(false) | bool }}"
+
+host:
+  temp_directory: "/tmp/ansible_home"
+
+network:
+  calicoctl:
+    arch: "arm64"
+    version: "3.31.0"
+    download_url: "https://github.com/projectcalico/calico/releases/download/v{{ network.calicoctl.version }}/calicoctl-linux-{{ network.calicoctl.arch }}"
+    executable_path: "/usr/local/bin/kubectl-calico"

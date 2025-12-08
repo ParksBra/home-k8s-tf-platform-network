@@ -1,0 +1,72 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  name: 'local-lab'
+  vmImage: 'ubuntu-latest'
+
+resources:
+  pipelines:
+    - pipeline: cluster-base
+      source: ParksBra.home-k8s-cluster-base
+    - pipeline: platform
+      source: ParksBra.home-k8s-platform
+
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: ParksBra
+      ref: initial_development
+      name: ParksBra/home-k8s-ado-templates
+
+variables:
+  - group: home-k8s-ssh
+
+stages:
+  - stage: "platformNetworkPrerequisites"
+    displayName: "Platform Network Prerequisites"
+    variables:
+      - group: home-k8s-cluster
+    jobs:
+      - template: apply-ansible.yml@templates
+        parameters:
+          pythonVenvPath: "$(System.DefaultWorkingDirectory)/.venv"
+          pythonVenvCacheVersion: "1"
+          pythonRequirementsFileRelativePath: "requirements.txt"
+          ansibleRequirementsFileRelativePath: "requirements.yml"
+          ansibleRepository: "self"
+          ansibleRepositoryAnsiblePath: "ansible"
+          ansibleConfigRelativePath: "ansible.cfg"
+          ansibleSshConfigurations:
+            - group: k8s_controller
+              user: controller
+              keySecretFileName: home-k8s-ssh-controller-private-key
+              keyPassphrase: ""
+          ansiblePlaybooks:
+            - site.yml
+          ansibleDebug: false
+          ansiblePlaybookExtraEnvironmentVariables: {}
+
+  - stage: "platformNetworkDeployment"
+    displayName: "Platform Network Deployment"
+    dependsOn: "platformNetworkPrerequisites"
+    variables:
+      - group: home-k8s-cluster
+    jobs:
+      - template: apply-terraform.yml@templates
+        parameters:
+          kubeconfigArtifactName: "kubeconfigFile"
+          kubeconfigArtifactSourcePipeline: "cluster-base"
+          terraformPlatformRepository: "self"
+          terraformPlatformRepositoryTerraformPath: "terraform"
+          terraformVersion: "latest"
+          terraformBackendNamespace: "kube-system"
+          terraformBackendSuffix: "platform-network"
+          terraformExtraEnvironmentVariables:
+            TF_VAR_azuredevops_library_name: "home-k8s-cluster"
+            TF_VAR_azuredevops_library_project_id: "$(System.TeamProjectId)"
+            AZDO_PERSONAL_ACCESS_TOKEN: $(System.AccessToken)
+            AZDO_ORG_SERVICE_URL: $(System.TeamFoundationCollectionUri)
+            CLOUDFLARE_API_TOKEN: $(home-k8s-terraform-provider-cloudflare-api-token)

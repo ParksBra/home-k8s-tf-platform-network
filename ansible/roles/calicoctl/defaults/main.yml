@@ -1,0 +1,4 @@
+network.calicoctl.arch: "arm64"
+network.calicoctl.version: "3.31.0"
+network.calicoctl.download_url: "https://github.com/projectcalico/calico/releases/download/v{{ network.calicoctl.version }}/calicoctl-linux-{{ network.calicoctl.arch }}"
+network.calicoctl.executable_path: "/usr/local/bin/kubectl-calico"
