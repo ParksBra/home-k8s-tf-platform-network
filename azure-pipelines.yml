@@ -19,6 +19,27 @@ resources:
       ref: initial_development
       name: ParksBra/home-k8s-ado-templates
 
+parameters:
+  - name: ansibleDebug
+    displayName: 'Enable Ansible Debugging'
+    type: boolean
+    default: false
+
+  - name: terraformValidate
+    displayName: 'Enable Terraform Validation Before Plan'
+    type: boolean
+    default: true
+
+  - name: terraformApply
+    displayName: 'Enable Terraform Apply After Plan'
+    type: boolean
+    default: true
+
+  - name: terraformPlanDestroy
+    displayName: 'Terraform Plan Destruction'
+    type: boolean
+    default: false
+
 variables:
   - group: home-k8s-ssh
 
@@ -47,7 +68,7 @@ stages:
                   keyPassphrase: ""
               ansiblePlaybooks:
                 - site.yml
-              ansibleDebug: false
+              ansibleDebug: ${{ parameters.ansibleDebug }}
               ansiblePlaybookExtraEnvironmentVariables: {}
 
   - stage: "platformNetworkDeployment"
@@ -81,6 +102,6 @@ stages:
                   value: "$(System.TeamFoundationCollectionUri)"
                 - name: CLOUDFLARE_API_TOKEN
                   value: "$(home-k8s-terraform-provider-cloudflare-api-token)"
-              terraformValidate: true
-              terraformPlanDestroy: false
-              terraformApply: true
+              terraformValidate: ${{ parameters.terraformValidate }}
+              terraformPlanDestroy: ${{ parameters.terraformPlanDestroy }}
+              terraformApply: ${{ parameters.terraformApply }}
