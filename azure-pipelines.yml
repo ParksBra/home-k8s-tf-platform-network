@@ -127,5 +127,5 @@ stages:
                 - name: CLOUDFLARE_API_TOKEN
                   value: "$(home-k8s-terraform-provider-cloudflare-api-token)"
               terraformValidate: ${{ parameters.terraformValidate }}
-              terraformPlanDestroy: eq(${{ parameters.terraformPlanMode }}, "destroy")
+              terraformPlanDestroy: eq("${{ parameters.terraformPlanMode }}", "destroy")
               terraformApply: ${{ parameters.terraformApply }}
