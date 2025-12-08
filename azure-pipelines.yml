@@ -30,24 +30,27 @@ stages:
     variables:
       - group: home-k8s-cluster
     jobs:
-      - template: apply-ansible.yml@templates
-        parameters:
-          pythonVenvPath: "$(System.DefaultWorkingDirectory)/.venv"
-          pythonVenvCacheVersion: "1"
-          pythonRequirementsFileRelativePath: "requirements.txt"
-          ansibleRequirementsFileRelativePath: "requirements.yml"
-          ansibleRepository: "self"
-          ansibleRepositoryAnsiblePath: "ansible"
-          ansibleConfigRelativePath: "ansible.cfg"
-          ansibleSshConfigurations:
-            - group: k8s_controller
-              user: controller
-              keySecretFileName: "$(home-k8s-ssh-controller-key-secret-file)"
-              keyPassphrase: ""
-          ansiblePlaybooks:
-            - site.yml
-          ansibleDebug: false
-          ansiblePlaybookExtraEnvironmentVariables: {}
+      - job: "applyAnsible"
+        displayName: "Apply Ansible Playbooks for Network Prerequisites"
+        steps:
+          - template: apply-ansible.yml@templates
+            parameters:
+              pythonVenvPath: "$(System.DefaultWorkingDirectory)/.venv"
+              pythonVenvCacheVersion: "1"
+              pythonRequirementsFileRelativePath: "requirements.txt"
+              ansibleRequirementsFileRelativePath: "requirements.yml"
+              ansibleRepository: "self"
+              ansibleRepositoryAnsiblePath: "ansible"
+              ansibleConfigRelativePath: "ansible.cfg"
+              ansibleSshConfigurations:
+                - group: k8s_controller
+                  user: controller
+                  keySecretFileName: "$(home-k8s-ssh-controller-key-secret-file)"
+                  keyPassphrase: ""
+              ansiblePlaybooks:
+                - site.yml
+              ansibleDebug: false
+              ansiblePlaybookExtraEnvironmentVariables: {}
 
   - stage: "platformNetworkDeployment"
     displayName: "Platform Network Deployment"
@@ -56,25 +59,28 @@ stages:
       - group: home-k8s-cluster
       - group: home-k8s-terraform
     jobs:
-      - template: apply-terraform.yml@templates
-        parameters:
-          kubeconfigArtifactName: "kubeconfigFile"
-          kubeconfigArtifactSourcePipeline: "cluster-base"
-          terraformPlatformRepository: "self"
-          terraformPlatformRepositoryTerraformPath: "terraform"
-          terraformVersion: "latest"
-          terraformBackendNamespace: "kube-system"
-          terraformBackendSuffix: "platform-network"
-          terraformExtraEnvironmentVariables:
-            - name: TF_VAR_azuredevops_library_name
-              value: "home-k8s-cluster"
-            - name: TF_VAR_azuredevops_library_project_id
-              value: "$(System.TeamProjectId)"
-            - name: AZDO_PERSONAL_ACCESS_TOKEN
-              value: "$(System.AccessToken)"
-            - name: AZDO_ORG_SERVICE_URL
-              value: "$(System.TeamFoundationCollectionUri)"
-            - name: CLOUDFLARE_API_TOKEN
-              value: "$(home-k8s-terraform-provider-cloudflare-api-token)"
-          terraformPlanDestroy: false
-          terraformApply: true
+      - job: "applyTerraform"
+        displayName: "Apply Terraform for Platform Network"
+        steps:
+          - template: apply-terraform.yml@templates
+            parameters:
+              kubeconfigArtifactName: "kubeconfigFile"
+              kubeconfigArtifactSourcePipeline: "cluster-base"
+              terraformPlatformRepository: "self"
+              terraformPlatformRepositoryTerraformPath: "terraform"
+              terraformVersion: "latest"
+              terraformBackendNamespace: "kube-system"
+              terraformBackendSuffix: "platform-network"
+              terraformExtraEnvironmentVariables:
+                - name: TF_VAR_azuredevops_library_name
+                  value: "home-k8s-cluster"
+                - name: TF_VAR_azuredevops_library_project_id
+                  value: "$(System.TeamProjectId)"
+                - name: AZDO_PERSONAL_ACCESS_TOKEN
+                  value: "$(System.AccessToken)"
+                - name: AZDO_ORG_SERVICE_URL
+                  value: "$(System.TeamFoundationCollectionUri)"
+                - name: CLOUDFLARE_API_TOKEN
+                  value: "$(home-k8s-terraform-provider-cloudflare-api-token)"
+              terraformPlanDestroy: false
+              terraformApply: true
