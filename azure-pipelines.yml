@@ -35,10 +35,13 @@ parameters:
     type: boolean
     default: true
 
-  - name: terraformPlanDestroy
-    displayName: 'Terraform Plan Destruction'
-    type: boolean
-    default: false
+  - name: terraformPlanMode
+    displayName: 'Terraform Plan Mode'
+    type: string
+    values:
+      - "normal"
+      - "destroy"
+    default: "normal"
 
 variables:
   - group: home-k8s-ssh
@@ -124,5 +127,5 @@ stages:
                 - name: CLOUDFLARE_API_TOKEN
                   value: "$(home-k8s-terraform-provider-cloudflare-api-token)"
               terraformValidate: ${{ parameters.terraformValidate }}
-              terraformPlanDestroy: ${{ parameters.terraformPlanDestroy }}
+              terraformPlanDestroy: eq(${{ parameters.terraformPlanMode }}, "destroy")
               terraformApply: ${{ parameters.terraformApply }}
