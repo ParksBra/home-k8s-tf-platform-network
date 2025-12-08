@@ -15,12 +15,12 @@ resource "kubernetes_config_map" "context" {
     external_ingress_ip                       = module.network.ingress_nginx_service_loadbalancer_ip
     external_http_port                        = module.network.ingress_nginx_http_port
     external_https_port                       = module.network.ingress_nginx_https_port
-    pod_network_cidr                          = local.pod_network_cidr
-    service_network_cidr                      = local.service_network_cidr
-    cluster_domain                            = local.cluster_domain
-    external_domain                           = local.external_domain
-    dns_ttl_seconds                           = tostring(local.dns_ttl_seconds)
+    pod_network_cidr                          = var.pod_network_cidr
+    service_network_cidr                      = var.service_network_cidr
+    cluster_domain                            = var.cluster_domain
+    external_domain                           = var.external_domain
+    dns_ttl_seconds                           = tostring(var.dns_ttl_seconds)
     dns_records_default_comment               = local.dns_records_default_comment
-    dns_records_proxy_enabled                 = tostring(local.dns_records_proxy_enabled)
+    dns_records_proxy_enabled                 = tostring(var.dns_records_proxy_enabled)
   }
 }
