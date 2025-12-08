@@ -66,8 +66,8 @@ stages:
             parameters:
               kubeconfigArtifactName: "kubeConfig"
               kubeconfigArtifactSourcePipeline: "cluster-base"
-              terraformPlatformRepository: "self"
-              terraformPlatformRepositoryTerraformPath: "terraform"
+              terraformRepository: "self"
+              terraformRepositoryTerraformPath: "terraform"
               terraformVersion: "latest"
               terraformBackendNamespace: "kube-system"
               terraformBackendSuffix: "platform-network"
@@ -82,5 +82,6 @@ stages:
                   value: "$(System.TeamFoundationCollectionUri)"
                 - name: CLOUDFLARE_API_TOKEN
                   value: "$(home-k8s-terraform-provider-cloudflare-api-token)"
+              terraformValidate: true
               terraformPlanDestroy: false
               terraformApply: true
