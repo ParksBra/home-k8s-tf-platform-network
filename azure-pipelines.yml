@@ -120,10 +120,6 @@ stages:
                 - name: dns_records_proxy_enabled
                   value: "$(home-k8s-cluster-dns-records-proxy-enabled)"
               terraformExtraEnvironmentVariables:
-                - name: AZDO_PERSONAL_ACCESS_TOKEN
-                  value: "$(System.AccessToken)"
-                - name: AZDO_ORG_SERVICE_URL
-                  value: "$(System.TeamFoundationCollectionUri)"
                 - name: CLOUDFLARE_API_TOKEN
                   value: "$(home-k8s-terraform-provider-cloudflare-api-token)"
               terraformValidate: ${{ parameters.terraformValidate }}
