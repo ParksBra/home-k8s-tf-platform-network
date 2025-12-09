@@ -46,7 +46,7 @@ variables:
 stages:
   - stage: "platformNetworkPrerequisites"
     displayName: "Platform Network Prerequisites"
-    condition: in(Build.Reason, 'Manual', 'IndividualCI')
+    condition: in($(Build.Reason), 'Manual', 'IndividualCI')
     variables:
       - group: home-k8s-cluster
     jobs:
