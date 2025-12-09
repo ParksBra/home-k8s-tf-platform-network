@@ -38,6 +38,16 @@ parameters:
       - "destroy"
     default: "normal"
 
+  - name: terraformApply
+    displayName: 'Enable Terraform Apply After Plan (Manual Triggers Only)'
+    type: boolean
+    default: true
+
+  - name: ansibleApply
+    displayName: 'Enable Ansible Apply Before Terraform (Manual Triggers Only)'
+    type: boolean
+    default: true
+
 variables:
   - group: home-k8s-ssh
   - group: home-k8s-cluster
@@ -46,7 +56,7 @@ variables:
 stages:
   - stage: "platformNetworkPrerequisites"
     displayName: "Platform Network Prerequisites"
-    condition: in(variables['Build.Reason'], 'Manual', 'IndividualCI')
+    condition: and(in(variables['Build.Reason'], 'Manual', 'IndividualCI'), eq(parameters.ansibleApply, true))
     variables:
       - group: home-k8s-cluster
     jobs:
@@ -112,3 +122,4 @@ stages:
           value: "$(home-k8s-terraform-provider-cloudflare-api-token)"
       terraformValidate: ${{ parameters.terraformValidate }}
       terraformPlanDestroy: ${{ eq(parameters.terraformPlanMode, 'destroy') }}
+      terraformApply: ${{ parameters.terraformApply }}
