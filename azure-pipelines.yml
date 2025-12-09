@@ -57,7 +57,7 @@ variables:
   - group: home-k8s-terraform
 
 stages:
-  - template: apply-ansible.yml@templates
+  - template: ansible.yml@templates
     parameters:
       pythonVenvPath: "$(System.DefaultWorkingDirectory)/.venv"
       pythonVenvCacheVersion: "1"
