@@ -1,6 +1,6 @@
 resource "kubernetes_namespace" "cert_manager" {
   depends_on = [
-    module.cni # We want to ensure the namespaces delete before CNI is torn down, as resources dependant on namespaces may not terminate correctly after CNI is removed.
+    module.cni # We want to ensure the namespaces delete before CNI is torn down, as resources dependent on namespaces may not terminate correctly after CNI is removed.
   ]
   count = var.cert_manager_create_namespace ? 1 : 0
   metadata {

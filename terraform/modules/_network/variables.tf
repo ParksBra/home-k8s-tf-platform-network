@@ -102,7 +102,7 @@ variable "ingress_nginx_create_namespace" {
 }
 
 variable "ingress_nginx_ingress_class_resource_name" {
-  description = "The Ingress class name to use for the Ingress NGINX controller."
+  description = "The Ingress class resource name to use for the Ingress NGINX controller."
   type        = string
   default     = "nginx"
 }
@@ -127,7 +127,7 @@ variable "tailscale_oauth_client_secret" {
 
 variable "tailscale_operator_default_tags" {
   description = "Default tags to add to Tailscale entries."
-  type        = list
+  type        = list(string)
   default     = [
     "tag:k8s-operator"
   ]
@@ -135,7 +135,7 @@ variable "tailscale_operator_default_tags" {
 
 variable "tailscale_proxy_default_tags" {
   description = "Default tags to add to Tailscale proxy entries."
-  type        = list
+  type        = list(string)
   default     = [
     "tag:k8s"
   ]
