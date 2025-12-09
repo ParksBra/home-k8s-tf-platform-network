@@ -45,10 +45,13 @@ parameters:
 
 variables:
   - group: home-k8s-ssh
+  - group: home-k8s-cluster
+  - group: home-k8s-terraform
 
 stages:
   - stage: "platformNetworkPrerequisites"
     displayName: "Platform Network Prerequisites"
+    condition: in(Build.Reason, 'Manual', 'IndividualCI')
     variables:
       - group: home-k8s-cluster
     jobs:
@@ -74,54 +77,43 @@ stages:
               ansibleDebug: ${{ parameters.ansibleDebug }}
               ansiblePlaybookExtraEnvironmentVariables: {}
 
-  - stage: "platformNetworkDeployment"
-    displayName: "Platform Network Deployment"
-    dependsOn: "platformNetworkPrerequisites"
-    variables:
-      - group: home-k8s-cluster
-      - group: home-k8s-terraform
-    jobs:
-      - job: "applyTerraform"
-        displayName: "Apply Terraform for Platform Network"
-        steps:
-          - template: apply-terraform.yml@templates
-            parameters:
-              kubeconfigArtifactFileName: "kubeconfig"
-              kubeconfigArtifactName: "kubeConfig"
-              kubeconfigArtifactSourcePipeline: "cluster-base"
-              terraformRepository: "self"
-              terraformRepositoryTerraformPath: "terraform"
-              terraformVersion: "latest"
-              terraformBackendNamespace: "kube-system"
-              terraformBackendSuffix: "platform-network"
-              terraformVariables:
-                - name: tailscale_oauth_client_id
-                  value: "$(home-k8s-cluster-tailscale-operator-client-id)"
-                - name: tailscale_oauth_client_secret
-                  value: "$(home-k8s-cluster-tailscale-operator-client-secret)"
-                - name: cert_manager_acme_email
-                  value: "$(home-k8s-cluster-certmanager-acme-email)"
-                - name: cert_manager_dns_provider
-                  value: "cloudflare"
-                - name: cert_manager_dns_provider_email
-                  value: "$(home-k8s-cluster-certmanager-cloudflare-email)"
-                - name: cert_manager_dns_provider_api_token
-                  value: "$(home-k8s-cluster-certmanager-cloudflare-api-token)"
-                - name: pod_network_cidr
-                  value: "$(home-k8s-cluster-pod-network-cidr)"
-                - name: service_network_cidr
-                  value: "$(home-k8s-cluster-service-network-cidr)"
-                - name: cluster_domain
-                  value: "$(home-k8s-cluster-cluster-domain)"
-                - name: external_domain
-                  value: "$(home-k8s-cluster-external-domain)"
-                - name: dns_ttl_seconds
-                  value: "$(home-k8s-cluster-dns-ttl-seconds)"
-                - name: dns_records_proxy_enabled
-                  value: "$(home-k8s-cluster-dns-records-proxy-enabled)"
-              terraformExtraEnvironmentVariables:
-                - name: CLOUDFLARE_API_TOKEN
-                  value: "$(home-k8s-terraform-provider-cloudflare-api-token)"
-              terraformValidate: ${{ parameters.terraformValidate }}
-              terraformPlanDestroy: ${{ eq(parameters.terraformPlanMode, 'destroy') }}
-              terraformApply: ${{ parameters.terraformApply }}
+  - template: terraform.yml@templates
+    parameters:
+      kubeconfigArtifactFileName: "kubeconfig"
+      kubeconfigArtifactName: "kubeConfig"
+      kubeconfigArtifactSourcePipeline: "cluster-base"
+      terraformRepository: "self"
+      terraformRepositoryTerraformPath: "terraform"
+      terraformVersion: "latest"
+      terraformBackendNamespace: "kube-system"
+      terraformBackendSuffix: "platform-network"
+      terraformVariables:
+        - name: tailscale_oauth_client_id
+          value: "$(home-k8s-cluster-tailscale-operator-client-id)"
+        - name: tailscale_oauth_client_secret
+          value: "$(home-k8s-cluster-tailscale-operator-client-secret)"
+        - name: cert_manager_acme_email
+          value: "$(home-k8s-cluster-certmanager-acme-email)"
+        - name: cert_manager_dns_provider
+          value: "cloudflare"
+        - name: cert_manager_dns_provider_email
+          value: "$(home-k8s-cluster-certmanager-cloudflare-email)"
+        - name: cert_manager_dns_provider_api_token
+          value: "$(home-k8s-cluster-certmanager-cloudflare-api-token)"
+        - name: pod_network_cidr
+          value: "$(home-k8s-cluster-pod-network-cidr)"
+        - name: service_network_cidr
+          value: "$(home-k8s-cluster-service-network-cidr)"
+        - name: cluster_domain
+          value: "$(home-k8s-cluster-cluster-domain)"
+        - name: external_domain
+          value: "$(home-k8s-cluster-external-domain)"
+        - name: dns_ttl_seconds
+          value: "$(home-k8s-cluster-dns-ttl-seconds)"
+        - name: dns_records_proxy_enabled
+          value: "$(home-k8s-cluster-dns-records-proxy-enabled)"
+      terraformExtraEnvironmentVariables:
+        - name: CLOUDFLARE_API_TOKEN
+          value: "$(home-k8s-terraform-provider-cloudflare-api-token)"
+      terraformValidate: ${{ parameters.terraformValidate }}
+      terraformPlanDestroy: ${{ eq(parameters.terraformPlanMode, 'destroy') }}
