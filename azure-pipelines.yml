@@ -30,11 +30,6 @@ parameters:
     type: boolean
     default: true
 
-  - name: terraformApply
-    displayName: 'Enable Terraform Apply After Plan'
-    type: boolean
-    default: true
-
   - name: terraformPlanMode
     displayName: 'Terraform Plan Mode'
     type: string
