@@ -75,5 +75,5 @@ output "ingress_nginx_service_loadbalancer_ip" {
 
 output "primary_ingress_class_name" {
   description = "The primary Ingress class name to be used by other modules."
-  value       = var.ingress_nginx_ingress_class_name
+  value       = module.ingress_nginx[0].ingress_class_name
 }

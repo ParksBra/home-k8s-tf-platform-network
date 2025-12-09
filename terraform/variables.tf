@@ -79,3 +79,9 @@ variable "tailscale_proxy_default_tags" {
     "tag:k8s"
   ]
 }
+
+variable "ingress_nginx_ingress_class_resource_name" {
+  description = "The Ingress class resource name to use for the Ingress NGINX controller."
+  type        = string
+  default     = "nginx"
+}

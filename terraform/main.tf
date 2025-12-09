@@ -12,6 +12,7 @@ module "network" {
 
   ingress_nginx_namespace = local.ingress_nginx_namespace
   ingress_nginx_create_namespace = true
+  ingress_nginx_ingress_class_resource_name = var.ingress_nginx_ingress_class_resource_name
 
   pod_network_cidr = var.pod_network_cidr
 

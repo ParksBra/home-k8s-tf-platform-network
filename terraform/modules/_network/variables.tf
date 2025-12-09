@@ -101,7 +101,7 @@ variable "ingress_nginx_create_namespace" {
   default     = true
 }
 
-variable "ingress_nginx_ingress_class_name" {
+variable "ingress_nginx_ingress_class_resource_name" {
   description = "The Ingress class name to use for the Ingress NGINX controller."
   type        = string
   default     = "nginx"
