@@ -56,9 +56,7 @@ variables:
 stages:
   - stage: "platformNetworkPrerequisites"
     displayName: "Platform Network Prerequisites"
-    condition: and(in(variables['Build.Reason'], 'Manual', 'IndividualCI'), eq(parameters.ansibleApply, true))
-    variables:
-      - group: home-k8s-cluster
+    condition: or(in(variables['Build.Reason'], 'Manual', 'IndividualCI'), and(in(variables['Build.Reason'], 'Manual'), eq(parameters.ansibleApply, true)))
     jobs:
       - job: "applyAnsible"
         displayName: "Apply Ansible Playbooks for Network Prerequisites"
