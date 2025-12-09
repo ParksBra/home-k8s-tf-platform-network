@@ -3,7 +3,7 @@ module "cni" {
   depends_on = [
     data.kubernetes_namespace.tigera_operator,
   ]
-  source = "git::https://github.com/ParksBra/home-k8s-tf-lib//modules/tigera_operator?ref=1.1.0"
+  source = "git::https://github.com/ParksBra/home-k8s-tf-lib//modules/tigera_operator?ref=1.4.0"
 
   chart_cleanup_on_fail   = var.chart_cleanup_on_fail
   chart_dependency_update = var.chart_dependency_update

@@ -1,0 +1,5 @@
+- hosts: k8s_controller
+  roles:
+    - {role: calicoctl, tags: ['calicoctl']}
+  become: true
+  become_user: root
