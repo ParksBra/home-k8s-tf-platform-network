@@ -11,6 +11,9 @@ resources:
     - pipeline: cluster-base
       source: ParksBra.home-k8s-cluster-base
       trigger:
+        branches:
+          include:
+            - main
         stages:
           - applyAnsible
           - fetchKubeconfigArtifact
