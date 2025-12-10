@@ -118,3 +118,5 @@ stages:
       terraformValidate: ${{ parameters.terraformValidate }}
       terraformPlanDestroy: ${{ eq(parameters.terraformPlanMode, 'destroy') }}
       terraformApply: ${{ parameters.terraformApply }}
+      terraformApplyDependsOn:
+        - applyAnsible
