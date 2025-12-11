@@ -62,7 +62,6 @@ variables:
 stages:
   - template: ansible.yml@templates
     parameters:
-      pythonVenvPath: "$(System.DefaultWorkingDirectory)/.venv"
       pythonVenvCacheVersion: "1"
       pythonRequirementsFileRelativePath: "requirements.txt"
       ansibleRequirementsFileRelativePath: "requirements.yml"
