@@ -62,7 +62,7 @@ variables:
 stages:
   - template: ansible.yml@templates
     parameters:
-      pythonVenvCacheVersion: "1"
+      pythonVenvCacheVersion: "2"
       pythonRequirementsFileRelativePath: "requirements.txt"
       ansibleRequirementsFileRelativePath: "requirements.yml"
       ansibleRepository: "self"
