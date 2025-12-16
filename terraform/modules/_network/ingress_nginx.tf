@@ -5,7 +5,7 @@ module "ingress_nginx" {
     module.tailscale,
     data.kubernetes_namespace.ingress_nginx,
   ]
-  source = "git::https://github.com/ParksBra/home-k8s-tf-lib//modules/ingress_nginx?ref=1.4.0"
+  source = "ingress_nginx"
 
   chart_cleanup_on_fail       = var.chart_cleanup_on_fail
   chart_dependency_update     = var.chart_dependency_update
