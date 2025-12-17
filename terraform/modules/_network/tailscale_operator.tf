@@ -4,7 +4,7 @@ module "tailscale" {
     module.cni,
     data.kubernetes_namespace.tailscale_operator,
   ]
-  source = "tailscale"
+  source = "./tailscale"
 
   chart_cleanup_on_fail   = var.chart_cleanup_on_fail
   chart_dependency_update = var.chart_dependency_update

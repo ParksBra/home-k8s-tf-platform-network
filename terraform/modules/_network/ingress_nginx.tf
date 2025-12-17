@@ -5,7 +5,7 @@ module "ingress_nginx" {
     module.tailscale,
     data.kubernetes_namespace.ingress_nginx,
   ]
-  source = "ingress_nginx"
+  source = "./ingress_nginx"
 
   chart_cleanup_on_fail       = var.chart_cleanup_on_fail
   chart_dependency_update     = var.chart_dependency_update
